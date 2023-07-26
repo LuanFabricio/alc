@@ -129,3 +129,56 @@ mod mul {
         let _ = matrix_a * matrix_b;
     }
 }
+
+mod transpose {
+    use super::*;
+
+    #[test]
+    fn should_invert_rows_and_columns() {
+        const ROWS: usize = 3;
+        const COLUMNS: usize = 2;
+
+        let mat_a = Matrix::new(ROWS, COLUMNS, None);
+
+        let mat_a_t = mat_a.transpose();
+
+        assert_eq!(mat_a.rows, mat_a_t.columns);
+        assert_eq!(mat_a.columns, mat_a_t.rows);
+    }
+
+    #[test]
+    fn should_invert_content() {
+        const ROWS: usize = 3;
+        const COLUMNS: usize = 2;
+
+        let mut mat_a = Matrix::new(ROWS, COLUMNS, None);
+
+        mat_a[0][1] = 2_f32;
+        mat_a[1][0] = -1_f32;
+        mat_a[2][1] = 1_f32;
+
+        let mat_a_t = mat_a.transpose();
+
+        assert_eq!(mat_a[2][1], mat_a_t[1][2]);
+        assert_eq!(mat_a[1][0], mat_a_t[0][1]);
+        assert_eq!(mat_a[0][1], mat_a_t[1][0]);
+    }
+
+    #[test]
+    fn should_maintain_main_diagonal() {
+        const ROWS: usize = 3;
+        const COLUMNS: usize = 2;
+
+        let mut mat_a = Matrix::new(ROWS, COLUMNS, None);
+
+        for i in 0..COLUMNS {
+            mat_a[i][i] = (i + 1) as f32;
+        }
+
+        let mat_a_t = mat_a.transpose();
+
+        for i in 0..COLUMNS {
+            assert_eq!(mat_a[i][i], mat_a_t[i][i]);
+        }
+    }
+}
