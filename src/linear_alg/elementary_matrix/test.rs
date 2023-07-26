@@ -1,4 +1,3 @@
-use super::*;
 use crate::structs::matrix::Matrix;
 
 mod change_line {
