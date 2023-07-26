@@ -1,4 +1,4 @@
-use std::ops::{Add, Mul};
+use std::ops::{Add, Index, IndexMut, Mul};
 
 #[cfg(test)]
 mod test;
@@ -30,6 +30,18 @@ impl Matrix {
         }
 
         matrix
+    }
+
+    pub fn transpose(&self) -> Self {
+        let mut t = Self::new(self.columns, self.rows, None);
+
+        for i in 0..self.content.len() {
+            for j in 0..self.content[i].len() {
+                t.content[j][i] = self.content[i][j];
+            }
+        }
+
+        t
     }
 }
 
@@ -85,5 +97,19 @@ impl Mul for Matrix {
             columns,
             content: output,
         }
+    }
+}
+
+impl Index<usize> for Matrix {
+    type Output = Vec<f32>;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        self.content.get(index).unwrap()
+    }
+}
+
+impl IndexMut<usize> for Matrix {
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        self.content.get_mut(index).unwrap()
     }
 }
