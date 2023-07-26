@@ -18,6 +18,30 @@ pub fn solve_system(mut system: Matrix) -> Matrix {
     system
 }
 
+pub fn calc_lu(mut system: Matrix) -> (Matrix, Matrix) {
+    let mut l_matrices = vec![];
+
+    // TODO: Move the solve problem core to another function and reuse for solve_system and calc_lu.
+    for i in 1..system.rows {
+        let (mut pivot_index, mut pivot) = current_pivot(&system, i);
+
+        while pivot_index < i {
+            let sum_line = find_next_matrix(&system, i, pivot_index, pivot);
+            system = sum_line * system;
+            l_matrices.push(find_next_matrix(&system, i, pivot_index, -pivot));
+            (pivot_index, pivot) = current_pivot(&system, i);
+        }
+    }
+
+    l_matrices.reverse();
+    let mut mat_l = Matrix::create_identity(system.rows, system.columns);
+    for sum_mat in l_matrices {
+        mat_l = sum_mat * mat_l;
+    }
+
+    (mat_l, system)
+}
+
 fn find_next_matrix(matrix: &Matrix, line: usize, pivot_index: usize, pivot: f32) -> Matrix {
     Matrix::sum_line(
         matrix.rows,
@@ -90,6 +114,57 @@ mod test {
 
             for i in 0..matrix.rows {
                 assert_eq!(matrix[i], expected_solution[i]);
+            }
+        }
+    }
+
+    mod calc_lu {
+        use super::*;
+
+        // TODO: Maybe refactor later
+        #[test]
+        fn should_find_l_and_u_matrix() {
+            const ROWS: usize = 3;
+            const COLUMNS: usize = 3;
+
+            let mut matrix = Matrix::new(ROWS, COLUMNS, None);
+            // row 1 [3 2 4]
+            matrix[0][0] = 1_f32;
+            matrix[0][1] = 1_f32;
+            matrix[0][2] = 1_f32;
+            // row 2 [1 1 2]
+            matrix[1][0] = 1_f32;
+            matrix[1][1] = 2_f32;
+            matrix[1][2] = 2_f32;
+            // row 3 [4 3 2]
+            matrix[2][0] = 4_f32;
+            matrix[2][1] = 3_f32;
+            matrix[2][2] = 2_f32;
+
+            // expected l
+            // 1  0 0
+            // 1  1 0
+            // 4 -1 0
+            let mut expected_l = Matrix::create_identity(ROWS, COLUMNS);
+            expected_l[1][0] = 1_f32;
+            expected_l[2][0] = 4_f32;
+            expected_l[2][1] = -1_f32;
+
+            // expected u
+            // 1 1  1
+            // 0 1  1
+            // 0 0 -1
+            let mut expected_u = Matrix::create_identity(ROWS, COLUMNS);
+            expected_u[0][1] = 1_f32;
+            expected_u[0][2] = 1_f32;
+            expected_u[1][2] = 1_f32;
+            expected_u[2][2] = -1_f32;
+
+            let (l, u) = calc_lu(matrix);
+
+            for i in 0..ROWS {
+                assert_eq!(l[i], expected_l[i]);
+                assert_eq!(u[i], expected_u[i]);
             }
         }
     }
