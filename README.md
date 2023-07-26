@@ -34,12 +34,12 @@ cargo run --release
 ## To do list
 
 - [ ] Unidade 01
-    - [ ] Matrizes
+    - [x] Matrizes
         - [x] Soma
         - [x] Multiplicação
-        - [ ] Matriz transposta
-    - [ ] Sistemas lineares
-        - [ ] Solução de sistemas
+        - [x] Matriz transposta
+    - [x] Sistemas lineares
+        - [x] Solução de sistemas
         - [x] Matrizes elementares
     - [ ] Fatoração LU
     - [ ] Norma
