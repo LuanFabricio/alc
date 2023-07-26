@@ -7,6 +7,7 @@ pub fn solve_system(mut system: Matrix) -> Matrix {
     for i in 1..system.rows {
         let (mut pivot_index, mut pivot) = current_pivot(&system, i);
 
+        // TODO: review for linear dependency
         while pivot_index < i {
             let sum_line = find_next_matrix(&system, i, pivot_index, pivot);
             system = sum_line * system;
