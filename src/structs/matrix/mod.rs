@@ -3,6 +3,7 @@ use std::ops::{Add, Index, IndexMut, Mul};
 #[cfg(test)]
 mod test;
 
+#[derive(Debug, Clone)]
 pub struct Matrix {
     pub rows: usize,
     pub columns: usize,
@@ -69,6 +70,7 @@ impl Add for Matrix {
     }
 }
 
+// TODO: research how to use reference (`&self` and `other: &Self`)
 impl Mul for Matrix {
     type Output = Self;
 
