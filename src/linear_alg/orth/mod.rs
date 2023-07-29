@@ -12,11 +12,12 @@ impl Matrix {
         trace(&res).sqrt()
     }
 
-    fn inner_product(&self, other: &Matrix) -> Self {
+    fn inner_product(&self, other: &Matrix) -> f32 {
         let a = self.transpose();
         let b = other.clone();
 
-        a * b
+        let res = a * b;
+        trace(&res)
     }
 }
 
