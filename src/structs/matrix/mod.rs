@@ -44,6 +44,16 @@ impl Matrix {
 
         t
     }
+
+    pub fn set_col_vector(&mut self, col_index: usize, vec: Vec<f32>) {
+        if self.rows != vec.len() {
+            panic!("Matrix rows != vec.len(), {} != {}", self.rows, vec.len());
+        }
+
+        for i in 0..self.rows {
+            self[i][col_index] = vec[i];
+        }
+    }
 }
 
 impl Add for Matrix {

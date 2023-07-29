@@ -1,7 +1,10 @@
 #[cfg(test)]
 mod test;
 
-use crate::structs::matrix::Matrix;
+use crate::structs::{
+    matrix::Matrix,
+    vector::{col_vector, mul_vector, sub_vector, vec_inner_prod, vec_norm},
+};
 
 impl Matrix {
     fn norm(&self) -> f32 {
@@ -21,6 +24,25 @@ impl Matrix {
 
         let res = a * b;
         trace(&res)
+    }
+
+    fn ortho_gram_schmidt(&self) -> Self {
+        let mut q = Matrix::new(self.rows, self.columns, Some(0_f32));
+
+        for i in 0..self.columns {
+            let mut w = col_vector(self, i);
+
+            for j in 0..i {
+                let q_col = col_vector(&q, j);
+                let proj = vec_inner_prod(&w.clone(), &q_col);
+                let proj = mul_vector(&q_col, proj);
+                w = sub_vector(&w, &proj);
+            }
+            let vec_q = mul_vector(&w, 1_f32 / vec_norm(&w));
+            q.set_col_vector(i, vec_q);
+        }
+
+        q
     }
 }
 
