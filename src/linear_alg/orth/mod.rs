@@ -16,6 +16,9 @@ impl Matrix {
         let a = self.transpose();
         let b = other.clone();
 
+        println!("{}, {}", a.rows, a.columns);
+        println!("{}, {}", b.rows, b.columns);
+
         let res = a * b;
         trace(&res)
     }
