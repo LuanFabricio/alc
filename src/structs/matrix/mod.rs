@@ -3,6 +3,7 @@ use std::ops::{Add, Index, IndexMut, Mul};
 #[cfg(test)]
 mod test;
 
+#[derive(Debug, Clone)]
 pub struct Matrix {
     pub rows: usize,
     pub columns: usize,
@@ -35,8 +36,8 @@ impl Matrix {
     pub fn transpose(&self) -> Self {
         let mut t = Self::new(self.columns, self.rows, None);
 
-        for i in 0..self.content.len() {
-            for j in 0..self.content[i].len() {
+        for i in 0..self.rows {
+            for j in 0..self.columns {
                 t.content[j][i] = self.content[i][j];
             }
         }
@@ -69,16 +70,18 @@ impl Add for Matrix {
     }
 }
 
+// TODO: research how to use reference (`&self` and `other: &Self`)
 impl Mul for Matrix {
     type Output = Self;
 
     fn mul(self, other: Self) -> Self {
         if self.columns != other.rows {
-            panic!("Size not compatible");
+            panic!("Size not compatible, {} != {}", self.columns, other.rows);
         }
 
         let rows = self.rows;
         let columns = other.columns;
+        let k = self.columns;
 
         let mut output = vec![vec![0_f32; columns]; rows];
 
@@ -86,7 +89,8 @@ impl Mul for Matrix {
         for i in 0..rows {
             for j in 0..columns {
                 // Calc cell value
-                for c in 0..columns {
+                for c in 0..k {
+                    println!("{c}/{} | {c}/{}", self.columns, other.rows);
                     output[i][j] += self.content[i][c] * other.content[c][j];
                 }
             }

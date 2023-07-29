@@ -1,4 +1,5 @@
 mod elementary_matrix;
+mod orth;
 
 use crate::structs::matrix::Matrix;
 

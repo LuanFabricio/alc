@@ -42,8 +42,8 @@ cargo run --release
         - [x] Solução de sistemas
         - [x] Matrizes elementares
     - [x] Decomposição LU
-    - [ ] Norma
-    - [ ] Produto interno
+    - [x] Norma
+    - [x] Produto interno
     - [ ] Processo de ortogonalização Gram-Schmidt
     - [ ] Decomposição QR
     - [ ] Mínimos quadrados

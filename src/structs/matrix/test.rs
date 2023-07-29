@@ -115,6 +115,19 @@ mod mul {
         assert_eq!(matrix_c.columns, COLUMNS_B);
     }
 
+    #[test]
+    fn should_multiply_transposes() {
+        const ROWS: usize = 3;
+        const COLUMNS: usize = 2;
+
+        let mat_a = Matrix::new(ROWS, COLUMNS, Some(1_f32));
+
+        let res = mat_a.transpose() * mat_a;
+
+        assert_eq!(res.rows, COLUMNS);
+        assert_eq!(res.columns, COLUMNS);
+    }
+
     #[should_panic]
     #[test]
     fn should_panic_if_a_columns_arent_equal_a_b_rows() {
