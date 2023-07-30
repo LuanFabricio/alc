@@ -1,5 +1,8 @@
 use super::matrix::Matrix;
 
+#[cfg(test)]
+mod test;
+
 pub fn vec_norm(vec: &Vec<f32>) -> f32 {
     let res = vec_inner_prod(vec, vec);
 
