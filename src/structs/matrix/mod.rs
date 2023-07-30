@@ -100,7 +100,6 @@ impl Mul for Matrix {
             for j in 0..columns {
                 // Calc cell value
                 for c in 0..k {
-                    println!("{c}/{} | {c}/{}", self.columns, other.rows);
                     output[i][j] += self.content[i][c] * other.content[c][j];
                 }
             }
