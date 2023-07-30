@@ -45,7 +45,7 @@ cargo run --release
     - [x] Norma
     - [x] Produto interno
     - [x] Processo de ortogonalização Gram-Schmidt
-    - [ ] Decomposição QR
+    - [x] Decomposição QR
     - [ ] Mínimos quadrados
 - [ ] Unidade 02
     - [ ] ...
