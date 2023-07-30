@@ -56,3 +56,9 @@ pub fn sub_vector(vec_a: &Vec<f32>, vec_b: &Vec<f32>) -> Vec<f32> {
 
     vec_c
 }
+
+pub fn vec_is_ortho(vec_a: &Vec<f32>, vec_b: &Vec<f32>) -> bool {
+    let inner_prod = vec_inner_prod(vec_a, vec_b);
+
+    return inner_prod < f32::EPSILON;
+}
