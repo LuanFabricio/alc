@@ -48,6 +48,12 @@ cargo run --release
     - [x] Decomposição QR
     - [ ] Mínimos quadrados
 - [ ] Unidade 02
+    - [ ] Fatoração de Cholesky
+        - [ ] Matriz positiva
+    - [ ] Autovetores
+    - [ ] Autovalores
+    - [ ] Diagonalização
+        - [ ] Matrizes similares
     - [ ] ...
 - [ ] Unidade 03
     - [ ] ...
