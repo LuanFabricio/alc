@@ -38,6 +38,43 @@ mod new {
     }
 }
 
+mod from {
+    use super::*;
+
+    #[test]
+    fn should_create_a_matrix_from_vectors() {
+        let vec_col = vec![vec![0_f32], vec![1_f32], vec![2_f32], vec![3_f32]];
+
+        let matrix_col = Matrix::from(vec_col.clone());
+
+        let expected_rows = vec_col.len();
+        let expected_columns = vec_col[0].len();
+
+        assert_eq!(matrix_col.rows, expected_rows);
+        assert_eq!(matrix_col.columns, expected_columns);
+
+        for i in 0..matrix_col.rows {
+            for j in 0..matrix_col.columns {
+                assert_eq!(matrix_col[i][j], vec_col[i][j]);
+            }
+        }
+    }
+
+    #[should_panic]
+    #[test]
+    fn should_panic_if_havent_all_columns_len_equal() {
+        let vec_col = vec![
+            vec![0_f32],
+            vec![0_f32, 1_f32],
+            vec![0_f32, 1_f32, 2_f32],
+            vec![0_f32, 1_f32, 2_f32, 3_f32],
+            vec![0_f32, 1_f32, 2_f32, 3_f32, 4_f32],
+        ];
+
+        let _ = Matrix::from(vec_col);
+    }
+}
+
 mod create_identity {
     use super::*;
 
