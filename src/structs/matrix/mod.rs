@@ -21,6 +21,21 @@ impl Matrix {
         }
     }
 
+    pub fn from(content: Vec<Vec<f32>>) -> Self {
+        let rows = content.len();
+        let columns = content[0].len();
+
+        for i in 0..rows {
+            assert_eq!(content[i].len(), columns);
+        }
+
+        Self {
+            rows,
+            columns,
+            content,
+        }
+    }
+
     pub fn create_identity(rows: usize, columns: usize) -> Self {
         let mut matrix = Self::new(rows, columns, Some(0_f32));
 
